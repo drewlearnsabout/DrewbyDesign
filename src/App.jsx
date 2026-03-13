@@ -96,6 +96,9 @@ export default function App() {
           /* Prevents pull-to-refresh on mobile browsers */
           body {
             overscroll-behavior-y: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
           }
         `}
       </style>
@@ -164,7 +167,7 @@ export default function App() {
         
         {/* PORTFOLIO PAGE */}
         <section className="h-screen flex flex-col justify-center relative px-6 md:px-12">
-          <main className="max-w-7xl mx-auto w-full flex flex-col md:flex-row gap-8 md:gap-8 items-center z-10 pt-24 md:pt-0">
+          <main className="max-w-7xl mx-auto w-full flex flex-col md:flex-row gap-8 md:gap-8 items-center z-10 pt-20 md:pt-0">
             <div className="flex-1 space-y-4 md:space-y-8">
               <div>
                 <h1 className="font-['Space_Grotesk',_sans-serif] text-3xl md:text-5xl font-extrabold mb-2 leading-tight">Andrew Carbungco</h1>
@@ -222,7 +225,9 @@ export default function App() {
               ))}
             </div>
           </main>
-          <div onClick={() => setActivePage('about')} className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center gap-1 md:gap-2 opacity-60 hover:opacity-100 transition-all z-20">
+          
+          {/* Adjusted bottom placement for mobile visibility */}
+          <div onClick={() => setActivePage('about')} className="absolute bottom-10 md:bottom-8 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center gap-1 md:gap-2 opacity-60 hover:opacity-100 transition-all z-20">
             <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em]">About Me</span>
             <ArrowDown className="animate-bounce w-6 h-6 md:w-8 md:h-8" />
           </div>

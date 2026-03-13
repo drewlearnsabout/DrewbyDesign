@@ -79,10 +79,17 @@ export default function App() {
       {/* Persistent Backgrounds */}
       <div className="fixed inset-0 pointer-events-none">
         <div className={`absolute inset-0 transition-opacity duration-1000 ${activePage === 'home' ? 'opacity-100' : 'opacity-0'}`}>
+          {/* Night Mode: Moon */}
           <img 
             src="PXL_20240518_052455630.NIGHT%20(1).png" 
             alt="Moon" 
             className={`absolute -top-8 -right-8 md:-top-24 md:-right-24 w-72 md:w-[32rem] drop-shadow-[0_0_50px_rgba(255,255,255,0.15)] transition-all duration-1000 ${darkMode ? 'opacity-80 scale-100 rotate-0' : 'opacity-0 scale-75 rotate-45'}`}
+          />
+          {/* Day Mode: Beach */}
+          <img 
+            src="56c28000-6c42-450f-85ee-0a28afe0e1cf~1.jpg" 
+            alt="Beach" 
+            className={`absolute -top-8 -right-8 md:-top-24 md:-right-24 w-72 h-72 md:w-[32rem] md:h-[32rem] object-cover forest-mask transition-all duration-1000 ${!darkMode ? 'opacity-30 scale-100 rotate-0' : 'opacity-0 scale-90 -rotate-12'}`}
           />
         </div>
 
@@ -104,9 +111,7 @@ export default function App() {
         
         {/* PORTFOLIO PAGE */}
         <section className="h-screen flex flex-col justify-center relative px-6 md:px-12">
-          {/* Reduced pt from 36 to 24 on mobile to help fit elements */}
           <main className="max-w-7xl mx-auto w-full flex flex-col md:flex-row gap-8 md:gap-8 items-center z-10 pt-24 md:pt-0">
-            {/* Reduced vertical spacing on mobile (space-y-4 instead of 8) */}
             <div className="flex-1 space-y-4 md:space-y-8">
               <div>
                 <h1 className="font-['Space_Grotesk',_sans-serif] text-3xl md:text-5xl font-extrabold mb-2 leading-tight">Andrew Carbungco</h1>
@@ -129,14 +134,12 @@ export default function App() {
               </div>
             </div>
 
-            {/* Use Case Cards - Switched to flexible heights on mobile */}
             <div className="flex-1 flex flex-col sm:flex-row gap-4 md:gap-6 w-full">
               {[
                 { title: 'Fintech Dashboard', tag: 'Use Case 1', gradient: darkMode ? 'from-indigo-500/20' : 'from-blue-500/10' },
                 { title: 'E-Commerce App', tag: 'Use Case 2', gradient: darkMode ? 'from-emerald-500/20' : 'from-orange-500/10', stagger: true }
               ].map((card, i) => (
                 <div key={i} className={`flex-1 group cursor-pointer ${card.stagger ? 'sm:mt-12' : ''}`}>
-                  {/* Reduced min-h from 260 to 150 on mobile to prevent clipping */}
                   <div className={`backdrop-blur-md rounded-3xl p-5 md:p-6 h-full min-h-[150px] md:min-h-[340px] flex flex-col justify-end transition-all duration-300 group-hover:-translate-y-2 border shadow-xl relative overflow-hidden ${darkMode ? 'bg-white/5 border-white/20 group-hover:border-white/40' : 'bg-white/80 border-orange-100 group-hover:border-orange-300'}`}>
                     <div className={`absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${card.gradient} to-transparent`} />
                     <div className="relative z-10">

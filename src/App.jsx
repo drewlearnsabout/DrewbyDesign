@@ -87,6 +87,11 @@ export default function App() {
             -webkit-mask-image: radial-gradient(circle, black 30%, transparent 80%);
           }
 
+          .beach-mask {
+            mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+          }
+
           .page-transition-wrapper {
             transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             will-change: transform;
@@ -145,7 +150,7 @@ export default function App() {
           <img 
             src="56c28000-6c42-450f-85ee-0a28afe0e1cf~1.jpg" 
             alt="Beach" 
-            className={`absolute inset-0 w-full h-full object-cover forest-mask transition-all duration-1000 ${!darkMode ? 'opacity-30 scale-100' : 'opacity-0 scale-95'}`}
+            className={`absolute top-0 left-0 w-full h-[45vh] object-cover beach-mask transition-all duration-1000 ${!darkMode ? 'opacity-40 scale-100' : 'opacity-0 scale-95'}`}
           />
         </div>
 

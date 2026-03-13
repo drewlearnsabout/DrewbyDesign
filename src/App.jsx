@@ -47,7 +47,7 @@ export default function App() {
     
     // Swiped Down: Go to Home (only if at the top of About scroll)
     if (deltaY < -threshold && activePage === 'about') {
-      if (aboutRef.current && aboutRef.current.scrollTop === 0) {
+      if (aboutRef.current && aboutRef.current.scrollTop <= 5) {
         setActivePage('home');
       }
     }
@@ -63,7 +63,8 @@ export default function App() {
 
   return (
     <div 
-      className={`min-h-screen font-['Inter',_sans-serif] transition-colors duration-700 relative overflow-hidden ${themeColors}`}
+      className={`min-h-screen font-['Inter',_sans-serif] transition-colors duration-700 relative overflow-hidden overscroll-none ${themeColors}`}
+      style={{ touchAction: 'pan-y', overscrollBehaviorY: 'none' }}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
@@ -90,6 +91,11 @@ export default function App() {
             transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             will-change: transform;
             transform-style: preserve-3d;
+          }
+
+          /* Prevents pull-to-refresh on mobile browsers */
+          body {
+            overscroll-behavior-y: none;
           }
         `}
       </style>
@@ -225,7 +231,8 @@ export default function App() {
         {/* ABOUT PAGE */}
         <section 
           ref={aboutRef}
-          className="h-screen flex flex-col justify-center relative overflow-y-auto px-6 md:px-12"
+          className="h-screen flex flex-col justify-center relative overflow-y-auto px-6 md:px-12 overscroll-y-contain"
+          style={{ overscrollBehaviorY: 'contain' }}
         >
           <div onClick={() => setActivePage('home')} className="absolute top-24 md:top-28 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center gap-1 md:gap-2 opacity-60 hover:opacity-100 transition-all z-20">
             <ArrowUp className="animate-bounce w-6 h-6 md:w-8 md:h-8" />

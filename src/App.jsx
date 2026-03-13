@@ -152,7 +152,7 @@ export default function App() {
             <div className="flex-1 flex flex-col sm:flex-row gap-4 md:gap-6 w-full">
               {[
                 { 
-                  title: 'Fintech Dashboard', 
+                  title: 'Most recent use case coming soon', 
                   tag: 'Use Case 1', 
                   gradient: darkMode ? 'from-indigo-500/20' : 'from-blue-500/10' 
                 },

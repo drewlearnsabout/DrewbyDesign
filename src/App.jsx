@@ -63,7 +63,7 @@ export default function App() {
           </button>
 
           <nav className="hidden md:flex gap-6 font-medium">
-            {['about', 'home'].map((page) => (
+            {['home', 'about'].map((page) => (
               <button 
                 key={page}
                 onClick={() => setActivePage(page)} 
@@ -78,7 +78,6 @@ export default function App() {
 
       {/* Persistent Backgrounds */}
       <div className="fixed inset-0 pointer-events-none">
-        {/* Home Layer */}
         <div className={`absolute inset-0 transition-opacity duration-1000 ${activePage === 'home' ? 'opacity-100' : 'opacity-0'}`}>
           <img 
             src="PXL_20240518_052455630.NIGHT%20(1).png" 
@@ -87,7 +86,6 @@ export default function App() {
           />
         </div>
 
-        {/* About Layer */}
         <div className={`absolute inset-0 transition-opacity duration-1000 ${activePage === 'about' ? 'opacity-100' : 'opacity-0'}`}>
           <div className={`absolute inset-0 transition-colors duration-1000 ${darkMode ? 'bg-gradient-to-b from-slate-950 via-teal-950/20 to-slate-950' : 'bg-gradient-to-b from-emerald-50/50 via-teal-100/30 to-emerald-50/50'}`} />
           <img 
@@ -106,83 +104,78 @@ export default function App() {
         
         {/* PORTFOLIO PAGE */}
         <section className="h-screen flex flex-col justify-center relative px-6 md:px-12">
-          {/* Increased pt-36 for mobile to clear fixed nav */}
-          <main className="max-w-7xl mx-auto w-full flex flex-col md:flex-row gap-12 md:gap-8 items-center z-10 pt-36 md:pt-0">
-            <div className="flex-1 space-y-8">
+          {/* Reduced pt from 36 to 24 on mobile to help fit elements */}
+          <main className="max-w-7xl mx-auto w-full flex flex-col md:flex-row gap-8 md:gap-8 items-center z-10 pt-24 md:pt-0">
+            {/* Reduced vertical spacing on mobile (space-y-4 instead of 8) */}
+            <div className="flex-1 space-y-4 md:space-y-8">
               <div>
-                <h1 className="font-['Space_Grotesk',_sans-serif] text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Andrew Carbungco</h1>
-                <h2 className="font-['Space_Grotesk',_sans-serif] text-2xl md:text-3xl font-medium opacity-80">Visual Designer</h2>
+                <h1 className="font-['Space_Grotesk',_sans-serif] text-3xl md:text-5xl font-extrabold mb-2 leading-tight">Andrew Carbungco</h1>
+                <h2 className="font-['Space_Grotesk',_sans-serif] text-xl md:text-3xl font-medium opacity-80">Visual Designer</h2>
               </div>
-              <div className="space-y-4">
-                <h3 className={`font-['Space_Grotesk',_sans-serif] text-xl font-semibold border-b pb-2 inline-block ${darkMode ? 'border-white/20' : 'border-orange-200'}`}>Mission</h3>
-                <p className="text-lg leading-relaxed opacity-80">Designing digital experiences that blend aesthetic precision with intuitive functionality. Rooted in visual storytelling.</p>
+              <div className="space-y-2 md:space-y-4">
+                <h3 className={`font-['Space_Grotesk',_sans-serif] text-lg md:text-xl font-semibold border-b pb-1 inline-block ${darkMode ? 'border-white/20' : 'border-orange-200'}`}>Mission</h3>
+                <p className="text-base md:text-lg leading-relaxed opacity-80">Designing digital experiences that blend aesthetic precision with intuitive functionality. Rooted in visual storytelling.</p>
               </div>
-              <div className="space-y-4">
-                <h3 className={`font-['Space_Grotesk',_sans-serif] text-xl font-semibold border-b pb-2 inline-block ${darkMode ? 'border-white/20' : 'border-orange-200'}`}>Skills</h3>
-                <div className="flex flex-wrap gap-x-6 gap-y-2">
+              <div className="space-y-2 md:space-y-4">
+                <h3 className={`font-['Space_Grotesk',_sans-serif] text-lg md:text-xl font-semibold border-b pb-1 inline-block ${darkMode ? 'border-white/20' : 'border-orange-200'}`}>Skills</h3>
+                <div className="flex flex-wrap gap-x-4 md:gap-x-6 gap-y-1 md:gap-y-2">
                   {[
-                    'UI/UX Design', 
-                    'Prototyping', 
-                    'Figma', 
-                    'Svelte', 
-                    'Design Systems', 
-                    'CSS', 
-                    'Javascript', 
-                    'HTML', 
-                    'Adobe Suite', 
-                    'Style Guides'
+                    'UI/UX Design', 'Prototyping', 'Figma', 'Svelte', 'Design Systems', 
+                    'CSS', 'Javascript', 'HTML', 'Adobe Suite', 'Style Guides'
                   ].map((s) => (
-                    <span key={s} className="font-bold text-sm tracking-wide opacity-90">{s}</span>
+                    <span key={s} className="font-bold text-xs md:text-sm tracking-wide opacity-90">{s}</span>
                   ))}
                 </div>
               </div>
             </div>
 
-            <div className="flex-1 flex flex-col sm:flex-row gap-6 w-full">
+            {/* Use Case Cards - Switched to flexible heights on mobile */}
+            <div className="flex-1 flex flex-col sm:flex-row gap-4 md:gap-6 w-full">
               {[
                 { title: 'Fintech Dashboard', tag: 'Use Case 1', gradient: darkMode ? 'from-indigo-500/20' : 'from-blue-500/10' },
                 { title: 'E-Commerce App', tag: 'Use Case 2', gradient: darkMode ? 'from-emerald-500/20' : 'from-orange-500/10', stagger: true }
               ].map((card, i) => (
                 <div key={i} className={`flex-1 group cursor-pointer ${card.stagger ? 'sm:mt-12' : ''}`}>
-                  <div className={`backdrop-blur-md rounded-3xl p-6 min-h-[260px] md:min-h-[340px] flex flex-col justify-end transition-all duration-300 group-hover:-translate-y-2 border shadow-xl relative overflow-hidden ${darkMode ? 'bg-white/5 border-white/20 group-hover:border-white/40' : 'bg-white/80 border-orange-100 group-hover:border-orange-300'}`}>
+                  {/* Reduced min-h from 260 to 150 on mobile to prevent clipping */}
+                  <div className={`backdrop-blur-md rounded-3xl p-5 md:p-6 h-full min-h-[150px] md:min-h-[340px] flex flex-col justify-end transition-all duration-300 group-hover:-translate-y-2 border shadow-xl relative overflow-hidden ${darkMode ? 'bg-white/5 border-white/20 group-hover:border-white/40' : 'bg-white/80 border-orange-100 group-hover:border-orange-300'}`}>
                     <div className={`absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${card.gradient} to-transparent`} />
                     <div className="relative z-10">
-                      <span className={`font-['Space_Grotesk',_sans-serif] text-xs font-bold uppercase tracking-wider mb-2 block ${darkMode ? 'text-indigo-300' : 'text-blue-600'}`}>{card.tag}</span>
-                      <h3 className="font-['Space_Grotesk',_sans-serif] text-xl font-bold">{card.title}</h3>
+                      <span className={`font-['Space_Grotesk',_sans-serif] text-[10px] md:text-xs font-bold uppercase tracking-wider mb-1 md:mb-2 block ${darkMode ? 'text-indigo-300' : 'text-blue-600'}`}>{card.tag}</span>
+                      <h3 className="font-['Space_Grotesk',_sans-serif] text-lg md:text-xl font-bold leading-tight">{card.title}</h3>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
           </main>
-          <div onClick={() => setActivePage('about')} className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-all">
-            <span className="text-xs font-bold uppercase tracking-[0.3em]">About Me</span>
-            <ArrowDown className="animate-bounce w-8 h-8" />
+          <div onClick={() => setActivePage('about')} className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center gap-1 md:gap-2 opacity-60 hover:opacity-100 transition-all z-20">
+            <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em]">About Me</span>
+            <ArrowDown className="animate-bounce w-6 h-6 md:w-8 md:h-8" />
           </div>
         </section>
 
         {/* ABOUT PAGE */}
         <section className="h-screen flex flex-col justify-center relative overflow-y-auto px-6 md:px-12">
-          <div onClick={() => setActivePage('home')} className="absolute top-28 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-all">
-            <ArrowUp className="animate-bounce w-8 h-8" />
-            <span className="text-xs font-bold uppercase tracking-[0.3em]">Portfolio</span>
+          <div onClick={() => setActivePage('home')} className="absolute top-24 md:top-28 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center gap-1 md:gap-2 opacity-60 hover:opacity-100 transition-all z-20">
+            <ArrowUp className="animate-bounce w-6 h-6 md:w-8 md:h-8" />
+            <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em]">Portfolio</span>
           </div>
           <main className="max-w-4xl mx-auto w-full z-20 pt-20">
-            <div className="space-y-12">
+            <div className="space-y-8 md:space-y-12">
               <header>
-                <h2 className="font-['Space_Grotesk',_sans-serif] text-3xl md:text-5xl font-bold mb-6">Behind the Design</h2>
-                <div className={`h-1 w-24 rounded-full ${darkMode ? 'bg-emerald-500' : 'bg-blue-500'}`} />
+                <h2 className="font-['Space_Grotesk',_sans-serif] text-3xl md:text-5xl font-bold mb-4 md:mb-6">Behind the Design</h2>
+                <div className={`h-1 w-16 md:w-24 rounded-full ${darkMode ? 'bg-emerald-500' : 'bg-blue-500'}`} />
               </header>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-lg leading-relaxed opacity-80">
-                <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 text-base md:text-lg leading-relaxed opacity-80">
+                <div className="space-y-4 md:space-y-6">
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
                   <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
                 </div>
-                <div className="space-y-6">
+                <div className="space-y-4 md:space-y-6">
                   <p>Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis.</p>
-                  <div className="pt-6 flex gap-4">
+                  <div className="pt-4 md:pt-6 flex gap-4">
                     {[Github, Linkedin, Mail].map((Icon, i) => (
-                      <button key={i} className={`p-3 rounded-xl border transition-all ${darkMode ? 'bg-white/10 border-white/20 hover:bg-white/20' : 'bg-white border-slate-200 hover:bg-slate-50 shadow-sm'}`}>
+                      <button key={i} className={`p-2 md:p-3 rounded-xl border transition-all ${darkMode ? 'bg-white/10 border-white/20 hover:bg-white/20' : 'bg-white border-slate-200 hover:bg-slate-50 shadow-sm'}`}>
                         <Icon size={20} />
                       </button>
                     ))}

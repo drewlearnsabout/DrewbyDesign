@@ -51,10 +51,10 @@ export default function App() {
           <div className={`w-12 h-10 rounded-lg flex items-center justify-center border transition-colors duration-700 ${darkMode ? 'bg-white/20 border-white/30 text-white shadow-[0_0_15px_rgba(255,255,255,0.1)]' : 'bg-orange-500 border-orange-600 text-white shadow-md'}`}>
             <CustomLogo className="w-8 h-auto" />
           </div>
-          <span className="font-['Space_Grotesk',_sans-serif] font-bold text-xl tracking-tight drop-shadow-md">Andrew Carbungco</span>
+          <span className="font-['Space_Grotesk',_sans-serif] font-bold text-lg md:text-xl tracking-tight drop-shadow-md">Andrew Carbungco</span>
         </div>
 
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-4 md:gap-6">
           <button 
             onClick={() => setDarkMode(!darkMode)} 
             className={`p-2 rounded-full transition-colors flex items-center gap-2 border ${darkMode ? 'hover:bg-white/10 border-white/20 text-white' : 'hover:bg-orange-100 border-orange-200 text-orange-600'}`}
@@ -83,7 +83,7 @@ export default function App() {
           <img 
             src="PXL_20240518_052455630.NIGHT%20(1).png" 
             alt="Moon" 
-            className={`absolute -top-16 -right-16 md:-top-24 md:-right-24 w-72 md:w-[32rem] drop-shadow-[0_0_50px_rgba(255,255,255,0.15)] transition-all duration-1000 ${darkMode ? 'opacity-80 scale-100 rotate-0' : 'opacity-0 scale-75 rotate-45'}`}
+            className={`absolute -top-8 -right-8 md:-top-24 md:-right-24 w-72 md:w-[32rem] drop-shadow-[0_0_50px_rgba(255,255,255,0.15)] transition-all duration-1000 ${darkMode ? 'opacity-80 scale-100 rotate-0' : 'opacity-0 scale-75 rotate-45'}`}
           />
         </div>
 
@@ -106,7 +106,8 @@ export default function App() {
         
         {/* PORTFOLIO PAGE */}
         <section className="h-screen flex flex-col justify-center relative px-6 md:px-12">
-          <main className="max-w-7xl mx-auto w-full flex flex-col md:flex-row gap-12 md:gap-8 items-center z-10">
+          {/* Increased pt-36 for mobile to clear fixed nav */}
+          <main className="max-w-7xl mx-auto w-full flex flex-col md:flex-row gap-12 md:gap-8 items-center z-10 pt-36 md:pt-0">
             <div className="flex-1 space-y-8">
               <div>
                 <h1 className="font-['Space_Grotesk',_sans-serif] text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Andrew Carbungco</h1>

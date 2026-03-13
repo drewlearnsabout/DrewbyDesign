@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { ArrowDown, Sun, Moon, ArrowUp, Mail, Linkedin } from 'lucide-react';
 
 const CustomLogo = ({ className }) => (
@@ -22,10 +22,38 @@ const HPLogo = ({ className }) => (
 export default function App() {
   const [darkMode, setDarkMode] = useState(true);
   const [activePage, setActivePage] = useState('home');
+  const [touchStart, setTouchStart] = useState(null);
+  const aboutRef = useRef(null);
 
   const themeColors = darkMode 
     ? 'bg-slate-950 text-slate-50 selection:bg-emerald-500/30' 
     : 'bg-[#FDF8F5] text-slate-900 selection:bg-blue-500/30';
+
+  // Swipe logic for mobile navigation
+  const handleTouchStart = (e) => {
+    setTouchStart(e.touches[0].clientY);
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStart === null) return;
+    const touchEnd = e.changedTouches[0].clientY;
+    const deltaY = touchStart - touchEnd;
+    const threshold = 50; // Minimum distance to trigger swipe
+
+    // Swiped Up: Go to About
+    if (deltaY > threshold && activePage === 'home') {
+      setActivePage('about');
+    }
+    
+    // Swiped Down: Go to Home (only if at the top of About scroll)
+    if (deltaY < -threshold && activePage === 'about') {
+      if (aboutRef.current && aboutRef.current.scrollTop === 0) {
+        setActivePage('home');
+      }
+    }
+
+    setTouchStart(null);
+  };
 
   const handleCardClick = (link) => {
     if (link) {
@@ -34,7 +62,11 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen font-['Inter',_sans-serif] transition-colors duration-700 relative overflow-hidden ${themeColors}`}>
+    <div 
+      className={`min-h-screen font-['Inter',_sans-serif] transition-colors duration-700 relative overflow-hidden ${themeColors}`}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
       
       <style>
         {`
@@ -191,7 +223,10 @@ export default function App() {
         </section>
 
         {/* ABOUT PAGE */}
-        <section className="h-screen flex flex-col justify-center relative overflow-y-auto px-6 md:px-12">
+        <section 
+          ref={aboutRef}
+          className="h-screen flex flex-col justify-center relative overflow-y-auto px-6 md:px-12"
+        >
           <div onClick={() => setActivePage('home')} className="absolute top-24 md:top-28 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center gap-1 md:gap-2 opacity-60 hover:opacity-100 transition-all z-20">
             <ArrowUp className="animate-bounce w-6 h-6 md:w-8 md:h-8" />
             <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em]">Portfolio</span>

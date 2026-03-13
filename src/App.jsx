@@ -14,7 +14,7 @@ export default function App() {
   const [darkMode, setDarkMode] = useState(true);
 
   return (
-    <div className={`min-h-screen font-['Inter',_sans-serif] transition-colors duration-700 relative overflow-hidden ${darkMode ? 'bg-slate-950 text-slate-50 selection:bg-emerald-500/30' : 'bg-[#FDF8F5] text-slate-900 selection:bg-blue-500/30'}`}>
+    <div className={`min-h-screen font-['Inter',_sans-serif] transition-colors duration-700 relative overflow-x-hidden ${darkMode ? 'bg-slate-950 text-slate-50 selection:bg-emerald-500/30' : 'bg-[#FDF8F5] text-slate-900 selection:bg-blue-500/30'}`}>
       
       {/* Google Fonts Import */}
       <style>
@@ -24,19 +24,19 @@ export default function App() {
       </style>
 
       {/* Background Thematic Watermarks */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden flex flex-col justify-between">
-        {/* Astronomy / Space (Top) */}
-        <div className="absolute top-0 left-0 w-full h-[40vh]">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        {/* Astronomy / Space (Top Right) */}
+        <div className="absolute top-0 right-0 w-full h-[50vh]">
           <img 
-            src="PXL_20240518_052455630.NIGHT%20(1).jpg" 
+            src="PXL_20240518_052455630.NIGHT%20(1).png" 
             alt="Moon" 
-            className={`absolute top-0 right-0 md:top-8 md:right-12 w-64 md:w-96 mix-blend-screen drop-shadow-2xl transition-opacity duration-700 ${darkMode ? 'opacity-90' : 'opacity-0'}`}
+            className={`absolute -top-16 -right-16 md:-top-24 md:-right-24 w-72 md:w-[32rem] drop-shadow-[0_0_50px_rgba(255,255,255,0.15)] transition-all duration-1000 ease-in-out ${darkMode ? 'opacity-80 scale-100 rotate-0' : 'opacity-0 scale-75 rotate-45'}`}
           />
         </div>
       </div>
 
-      {/* Navigation Bar - Glassmorphism */}
-      <header className={`px-6 py-4 md:px-12 flex justify-between items-center backdrop-blur-md border-b sticky top-0 z-50 transition-colors duration-700 ${darkMode ? 'bg-white/5 border-white/10' : 'bg-white/60 border-orange-200/50 shadow-sm'}`}>
+      {/* Navigation Bar - Fixed Glassmorphism */}
+      <header className={`w-full px-6 py-4 md:px-12 flex justify-between items-center backdrop-blur-md border-b fixed top-0 left-0 z-50 transition-colors duration-700 ${darkMode ? 'bg-slate-950/80 border-white/10' : 'bg-white/70 border-orange-200/50 shadow-sm'}`}>
         <div className="flex items-center gap-2">
           <div className={`w-12 h-10 rounded-lg flex items-center justify-center border transition-colors duration-700 ${darkMode ? 'bg-white/20 border-white/30 text-white shadow-[0_0_15px_rgba(255,255,255,0.1)]' : 'bg-orange-500 border-orange-600 text-white shadow-md'}`}>
             <CustomLogo className="w-8 h-auto" />
@@ -45,7 +45,6 @@ export default function App() {
         </div>
 
         <div className="flex items-center gap-6">
-          {/* Theme Toggle */}
           <button 
             onClick={() => setDarkMode(!darkMode)} 
             className={`p-2 rounded-full transition-colors flex items-center gap-2 border ${darkMode ? 'hover:bg-white/10 border-white/20 text-white' : 'hover:bg-orange-100 border-orange-200 text-orange-600'}`}
@@ -62,7 +61,7 @@ export default function App() {
       </header>
 
       {/* Main Content Area */}
-      <main className="max-w-7xl mx-auto px-6 md:px-12 py-12 md:py-24 flex flex-col md:flex-row gap-12 md:gap-8 items-stretch relative z-10 min-h-[80vh]">
+      <main className="max-w-7xl mx-auto px-6 md:px-12 pt-28 pb-12 md:pt-40 md:pb-24 flex flex-col md:flex-row gap-12 md:gap-8 items-center relative z-10 min-h-[80vh]">
         
         {/* Left Column: Bio & Info */}
         <section className="flex-1 flex flex-col justify-center space-y-8">
@@ -78,7 +77,7 @@ export default function App() {
           <div className="space-y-4">
             <h3 className={`font-['Space_Grotesk',_sans-serif] text-xl font-semibold border-b pb-2 inline-block transition-colors duration-700 ${darkMode ? 'border-white/20 text-white' : 'border-orange-200 text-slate-900'}`}>Mission</h3>
             <p className={`text-lg leading-relaxed transition-colors duration-700 ${darkMode ? 'text-white/80' : 'text-slate-700'}`}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              Designing digital experiences that blend aesthetic precision with intuitive functionality. My approach is rooted in visual storytelling and user-centered design principles.
             </p>
           </div>
 
@@ -100,33 +99,33 @@ export default function App() {
         {/* Right Column: Case Studies */}
         <section className="flex-1 flex flex-col sm:flex-row gap-6 mt-8 md:mt-0" id="case-studies">
           
-          {/* Case Study 1 */}
+          {/* Case Study 1 - Shorter height */}
           <div className="flex-1 flex flex-col group cursor-pointer">
-            <div className={`flex-1 backdrop-blur-md rounded-3xl p-6 min-h-[300px] md:min-h-[400px] flex flex-col justify-end transition-all duration-300 group-hover:-translate-y-2 border shadow-xl overflow-hidden relative ${darkMode ? 'bg-white/5 border-white/20 group-hover:bg-white/10 group-hover:border-white/40' : 'bg-white/80 border-orange-100 group-hover:bg-white group-hover:border-orange-300 shadow-orange-900/5'}`}>
+            <div className={`flex-1 backdrop-blur-md rounded-3xl p-6 min-h-[260px] md:min-h-[340px] flex flex-col justify-end transition-all duration-300 group-hover:-translate-y-2 border shadow-xl overflow-hidden relative ${darkMode ? 'bg-white/5 border-white/20 group-hover:bg-white/10 group-hover:border-white/40' : 'bg-white/80 border-orange-100 group-hover:bg-white group-hover:border-orange-300 shadow-orange-900/5'}`}>
               
               <div className={`absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${darkMode ? 'from-indigo-500/20 to-transparent' : 'from-blue-500/10 to-transparent'}`}></div>
               
               <div className="relative z-10">
                 <span className={`font-['Space_Grotesk',_sans-serif] text-xs font-bold uppercase tracking-wider mb-2 block transition-colors duration-700 ${darkMode ? 'text-indigo-300' : 'text-blue-600'}`}>Use Case 1</span>
-                <h3 className={`font-['Space_Grotesk',_sans-serif] text-2xl font-bold mb-2 transition-colors duration-700 ${darkMode ? 'text-white' : 'text-slate-900'}`}>Fintech Dashboard Refactor</h3>
+                <h3 className={`font-['Space_Grotesk',_sans-serif] text-xl font-bold mb-2 transition-colors duration-700 ${darkMode ? 'text-white' : 'text-slate-900'}`}>Fintech Dashboard Refactor</h3>
                 <p className={`text-sm line-clamp-3 transition-colors duration-700 ${darkMode ? 'text-white/70' : 'text-slate-600'}`}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem. Aliquam erat volutpat.
+                  Streamlining complex financial data into a cohesive, user-friendly dashboard focusing on clarity and rapid data processing.
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Case Study 2 */}
+          {/* Case Study 2 - Shorter height + Stagger */}
           <div className="flex-1 flex flex-col group cursor-pointer mt-0 sm:mt-12">
-             <div className={`flex-1 backdrop-blur-md rounded-3xl p-6 min-h-[300px] md:min-h-[400px] flex flex-col justify-end transition-all duration-300 group-hover:-translate-y-2 border shadow-xl overflow-hidden relative ${darkMode ? 'bg-white/5 border-white/20 group-hover:bg-white/10 group-hover:border-white/40' : 'bg-white/80 border-orange-100 group-hover:bg-white group-hover:border-orange-300 shadow-orange-900/5'}`}>
+             <div className={`flex-1 backdrop-blur-md rounded-3xl p-6 min-h-[260px] md:min-h-[340px] flex flex-col justify-end transition-all duration-300 group-hover:-translate-y-2 border shadow-xl overflow-hidden relative ${darkMode ? 'bg-white/5 border-white/20 group-hover:bg-white/10 group-hover:border-white/40' : 'bg-white/80 border-orange-100 group-hover:bg-white group-hover:border-orange-300 shadow-orange-900/5'}`}>
                
                <div className={`absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${darkMode ? 'from-emerald-500/20 to-transparent' : 'from-orange-500/10 to-transparent'}`}></div>
               
               <div className="relative z-10">
                 <span className={`font-['Space_Grotesk',_sans-serif] text-xs font-bold uppercase tracking-wider mb-2 block transition-colors duration-700 ${darkMode ? 'text-emerald-300' : 'text-orange-500'}`}>Use Case 2</span>
-                <h3 className={`font-['Space_Grotesk',_sans-serif] text-2xl font-bold mb-2 transition-colors duration-700 ${darkMode ? 'text-white' : 'text-slate-900'}`}>E-Commerce Mobile App</h3>
+                <h3 className={`font-['Space_Grotesk',_sans-serif] text-xl font-bold mb-2 transition-colors duration-700 ${darkMode ? 'text-white' : 'text-slate-900'}`}>E-Commerce Mobile App</h3>
                 <p className={`text-sm line-clamp-3 transition-colors duration-700 ${darkMode ? 'text-white/70' : 'text-slate-600'}`}>
-                  Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                  A mobile-first shopping experience built on modern visual trends and optimized conversion pathways.
                 </p>
               </div>
             </div>

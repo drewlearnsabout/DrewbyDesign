@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowDown, Sun, Moon, ArrowUp, Mail, Linkedin, Github } from 'lucide-react';
+import { ArrowDown, Sun, Moon, ArrowUp, Mail, Linkedin } from 'lucide-react';
 
 const CustomLogo = ({ className }) => (
   <svg viewBox="0 0 160 100" className={className} fill="none" stroke="currentColor" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round">
@@ -213,11 +213,20 @@ export default function App() {
                     Originally from San Diego and now calling the Pacific Northwest home, I draw a lot of my creative energy from the environments around me. When I’m not at my desk, you can usually find me looking up—I’m a lifelong space enthusiast with a deep curiosity for the cosmos.
                   </p>
                   <div className="pt-4 md:pt-6 flex gap-4">
-                    {[Github, Linkedin, Mail].map((Icon, i) => (
-                      <button key={i} className={`p-2 md:p-3 rounded-xl border transition-all ${darkMode ? 'bg-white/10 border-white/20 hover:bg-white/20' : 'bg-white border-slate-200 hover:bg-slate-50 shadow-sm'}`}>
-                        <Icon size={20} />
-                      </button>
-                    ))}
+                    <a 
+                      href="https://www.linkedin.com/in/andrew-carbungco-1357ab22" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className={`p-2 md:p-3 rounded-xl border transition-all ${darkMode ? 'bg-white/10 border-white/20 hover:bg-white/20 text-white' : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-700 shadow-sm'}`}
+                    >
+                      <Linkedin size={20} />
+                    </a>
+                    <a 
+                      href="mailto:andrew.carbungco@gmail.com"
+                      className={`p-2 md:p-3 rounded-xl border transition-all ${darkMode ? 'bg-white/10 border-white/20 hover:bg-white/20 text-white' : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-700 shadow-sm'}`}
+                    >
+                      <Mail size={20} />
+                    </a>
                   </div>
                 </div>
               </div>

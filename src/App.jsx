@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ArrowDown, Sun, Moon, ArrowUp, Mail, Linkedin } from 'lucide-react';
 
 const CustomLogo = ({ className }) => (
@@ -24,10 +24,43 @@ export default function App() {
   const [activePage, setActivePage] = useState('home');
   const [touchStart, setTouchStart] = useState(null);
   const aboutRef = useRef(null);
+  const isChangingPage = useRef(false);
 
   const themeColors = darkMode 
     ? 'bg-slate-950 text-slate-50 selection:bg-emerald-500/30' 
     : 'bg-[#FDF8F5] text-slate-900 selection:bg-blue-500/30';
+
+  // Desktop Scroll (Wheel) navigation logic
+  useEffect(() => {
+    const handleWheel = (e) => {
+      if (isChangingPage.current) return;
+
+      const threshold = 50;
+      
+      // Scrolling Down on Home -> Go to About
+      if (e.deltaY > threshold && activePage === 'home') {
+        triggerPageChange('about');
+      }
+      
+      // Scrolling Up on About -> Go to Home (only if at the very top)
+      if (e.deltaY < -threshold && activePage === 'about') {
+        if (aboutRef.current && aboutRef.current.scrollTop <= 5) {
+          triggerPageChange('home');
+        }
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: true });
+    return () => window.removeEventListener('wheel', handleWheel);
+  }, [activePage]);
+
+  const triggerPageChange = (page) => {
+    isChangingPage.current = true;
+    setActivePage(page);
+    setTimeout(() => {
+      isChangingPage.current = false;
+    }, 800); // Cooldown to match transition duration
+  };
 
   // Swipe logic for mobile navigation
   const handleTouchStart = (e) => {
@@ -38,17 +71,15 @@ export default function App() {
     if (touchStart === null) return;
     const touchEnd = e.changedTouches[0].clientY;
     const deltaY = touchStart - touchEnd;
-    const threshold = 50; // Minimum distance to trigger swipe
+    const threshold = 50;
 
-    // Swiped Up: Go to About
     if (deltaY > threshold && activePage === 'home') {
-      setActivePage('about');
+      triggerPageChange('about');
     }
     
-    // Swiped Down: Go to Home (only if at the top of About scroll)
     if (deltaY < -threshold && activePage === 'about') {
       if (aboutRef.current && aboutRef.current.scrollTop <= 5) {
-        setActivePage('home');
+        triggerPageChange('home');
       }
     }
 
@@ -110,7 +141,7 @@ export default function App() {
 
       {/* Navigation */}
       <header className={`w-full px-6 py-4 md:px-12 flex justify-between items-center backdrop-blur-md border-b fixed top-0 left-0 z-50 transition-colors duration-700 ${darkMode ? 'bg-slate-950/80 border-white/10' : 'bg-white/70 border-orange-200/50 shadow-sm'}`}>
-        <div className="flex items-center gap-2 cursor-pointer" onClick={() => setActivePage('home')}>
+        <div className="flex items-center gap-2 cursor-pointer" onClick={() => triggerPageChange('home')}>
           <div className={`w-12 h-10 rounded-lg flex items-center justify-center border transition-colors duration-700 ${darkMode ? 'bg-white/20 border-white/30 text-white shadow-[0_0_15px_rgba(255,255,255,0.1)]' : 'bg-orange-500 border-orange-600 text-white shadow-md'}`}>
             <CustomLogo className="w-8 h-auto" />
           </div>
@@ -129,7 +160,7 @@ export default function App() {
             {['home', 'about'].map((page) => (
               <button 
                 key={page}
-                onClick={() => setActivePage(page)} 
+                onClick={() => triggerPageChange(page)} 
                 className={`capitalize transition-all duration-300 ${activePage === page ? (darkMode ? 'text-white underline decoration-emerald-500 underline-offset-8' : 'text-blue-600 underline decoration-blue-500 underline-offset-8') : 'opacity-60 hover:opacity-100'}`}
               >
                 {page === 'home' ? 'Portfolio' : 'About'}
@@ -167,13 +198,25 @@ export default function App() {
         </div>
       </div>
 
-      {/* Global Fixed UI Indicators */}
-      <div 
-        onClick={() => setActivePage('about')} 
-        className={`fixed bottom-10 md:bottom-8 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center gap-1 md:gap-2 transition-all duration-500 z-30 ${activePage === 'home' ? 'opacity-60 hover:opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
-      >
-        <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em]">About Me</span>
-        <ArrowDown className="animate-bounce w-6 h-6 md:w-8 md:h-8" />
+      {/* Global Fixed UI Indicators - Unified Layer for Click-ability */}
+      <div className="fixed inset-0 pointer-events-none z-30">
+        {/* Go to About Indicator (Fixed Bottom, active on Home) */}
+        <div 
+          onClick={() => triggerPageChange('about')} 
+          className={`absolute bottom-10 md:bottom-8 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center gap-1 md:gap-2 transition-all duration-500 pointer-events-auto ${activePage === 'home' ? 'opacity-60 hover:opacity-100' : 'opacity-0 pointer-events-none'}`}
+        >
+          <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em]">About Me</span>
+          <ArrowDown className="animate-bounce w-6 h-6 md:w-8 md:h-8" />
+        </div>
+
+        {/* Go back to Portfolio Indicator (Fixed Top, active on About) */}
+        <div 
+          onClick={() => triggerPageChange('home')} 
+          className={`absolute top-24 md:top-28 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center gap-1 md:gap-2 transition-all duration-500 pointer-events-auto ${activePage === 'about' ? 'opacity-60 hover:opacity-100' : 'opacity-0 pointer-events-none'}`}
+        >
+          <ArrowUp className="animate-bounce w-6 h-6 md:w-8 md:h-8" />
+          <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em]">Portfolio</span>
+        </div>
       </div>
 
       {/* Content Wrapper */}
@@ -247,11 +290,10 @@ export default function App() {
           className="h-screen flex flex-col justify-center relative overflow-y-auto px-6 md:px-12 overscroll-y-contain"
           style={{ overscrollBehaviorY: 'contain' }}
         >
-          <div onClick={() => setActivePage('home')} className="absolute top-24 md:top-28 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center gap-1 md:gap-2 opacity-60 hover:opacity-100 transition-all z-20">
-            <ArrowUp className="animate-bounce w-6 h-6 md:w-8 md:h-8" />
-            <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em]">Portfolio</span>
-          </div>
-          <main className="max-w-4xl mx-auto w-full z-20 pt-20">
+          {/* Internal relative spacer for top indicator area */}
+          <div className="h-20 md:h-28 w-full shrink-0" />
+          
+          <main className="max-w-4xl mx-auto w-full z-20 pt-10 md:pt-20">
             <div className="space-y-8 md:space-y-12">
               <header>
                 <h2 className="font-['Space_Grotesk',_sans-serif] text-3xl md:text-5xl font-bold mb-4 md:mb-6">Behind the Design</h2>
@@ -272,13 +314,13 @@ export default function App() {
                       href="https://www.linkedin.com/in/andrew-carbungco-1357ab22" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className={`p-2 md:p-3 rounded-xl border transition-all ${darkMode ? 'bg-white/10 border-white/20 hover:bg-white/20 text-white' : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-700 shadow-sm'}`}
+                      className={`p-2 md:p-3 rounded-xl border transition-all pointer-events-auto ${darkMode ? 'bg-white/10 border-white/20 hover:bg-white/20 text-white' : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-700 shadow-sm'}`}
                     >
                       <Linkedin size={20} />
                     </a>
                     <a 
                       href="mailto:andrew.carbungco@gmail.com"
-                      className={`p-2 md:p-3 rounded-xl border transition-all ${darkMode ? 'bg-white/10 border-white/20 hover:bg-white/20 text-white' : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-700 shadow-sm'}`}
+                      className={`p-2 md:p-3 rounded-xl border transition-all pointer-events-auto ${darkMode ? 'bg-white/10 border-white/20 hover:bg-white/20 text-white' : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-700 shadow-sm'}`}
                     >
                       <Mail size={20} />
                     </a>
@@ -287,6 +329,8 @@ export default function App() {
               </div>
             </div>
           </main>
+          {/* Internal spacer to ensure bottom navigation area is clear of content */}
+          <div className="h-32 md:h-24 w-full shrink-0" />
         </section>
 
       </div>

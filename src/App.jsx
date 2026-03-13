@@ -145,7 +145,7 @@ export default function App() {
           <img 
             src="56c28000-6c42-450f-85ee-0a28afe0e1cf~1.jpg" 
             alt="Beach" 
-            className={`absolute -top-8 left-0 w-full h-64 md:h-[30rem] object-cover forest-mask transition-all duration-1000 ${!darkMode ? 'opacity-30 scale-100' : 'opacity-0 scale-95'}`}
+            className={`absolute inset-0 w-full h-full object-cover forest-mask transition-all duration-1000 ${!darkMode ? 'opacity-30 scale-100' : 'opacity-0 scale-95'}`}
           />
         </div>
 

@@ -179,7 +179,7 @@ export default function App() {
             className={`absolute -top-8 -right-8 md:-top-24 md:-right-24 w-72 md:w-[32rem] drop-shadow-[0_0_50px_rgba(255,255,255,0.15)] transition-all duration-1000 ${darkMode ? 'opacity-80 scale-100 rotate-0' : 'opacity-0 scale-75 rotate-45'}`}
           />
           <img 
-            src="56c28000-6c42-450f-85ee-0a28afe0e1cf~1.jpg" 
+            src="56c28000-6c42-450f-85ee-0a28afe0e1cf~1.png" 
             alt="Beach" 
             className={`absolute top-0 left-0 w-full h-[45vh] object-cover beach-mask transition-all duration-1000 ${!darkMode ? 'opacity-40 scale-100' : 'opacity-0 scale-95'}`}
           />

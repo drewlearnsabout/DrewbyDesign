@@ -85,11 +85,11 @@ export default function App() {
             alt="Moon" 
             className={`absolute -top-8 -right-8 md:-top-24 md:-right-24 w-72 md:w-[32rem] drop-shadow-[0_0_50px_rgba(255,255,255,0.15)] transition-all duration-1000 ${darkMode ? 'opacity-80 scale-100 rotate-0' : 'opacity-0 scale-75 rotate-45'}`}
           />
-          {/* Day Mode: Beach */}
+          {/* Day Mode: Beach - Now spanning the full top of the page */}
           <img 
             src="56c28000-6c42-450f-85ee-0a28afe0e1cf~1.jpg" 
             alt="Beach" 
-            className={`absolute -top-8 -right-8 md:-top-24 md:-right-24 w-72 h-72 md:w-[32rem] md:h-[32rem] object-cover forest-mask transition-all duration-1000 ${!darkMode ? 'opacity-30 scale-100 rotate-0' : 'opacity-0 scale-90 -rotate-12'}`}
+            className={`absolute -top-8 left-0 w-full h-64 md:h-[30rem] object-cover forest-mask transition-all duration-1000 ${!darkMode ? 'opacity-30 scale-100' : 'opacity-0 scale-95'}`}
           />
         </div>
 

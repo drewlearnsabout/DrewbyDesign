@@ -8,6 +8,17 @@ const CustomLogo = ({ className }) => (
   </svg>
 );
 
+const HPLogo = ({ className }) => (
+  <svg viewBox="0 0 200 200" className={className}>
+    <circle cx="100" cy="100" r="95" fill="currentColor" />
+    <path 
+      d="M75 160V40H85V160H75ZM115 160V80H125V95C130 85 140 80 155 80C175 80 185 95 185 120V160H175V120C175 105 170 95 155 95C140 95 130 105 125 120V160H115Z" 
+      fill="white" 
+      transform="skewX(-10) translate(-10, 0)"
+    />
+  </svg>
+);
+
 export default function App() {
   const [darkMode, setDarkMode] = useState(true);
   const [activePage, setActivePage] = useState('home');
@@ -15,6 +26,12 @@ export default function App() {
   const themeColors = darkMode 
     ? 'bg-slate-950 text-slate-50 selection:bg-emerald-500/30' 
     : 'bg-[#FDF8F5] text-slate-900 selection:bg-blue-500/30';
+
+  const handleCardClick = (link) => {
+    if (link) {
+      window.open(link, '_blank');
+    }
+  };
 
   return (
     <div className={`min-h-screen font-['Inter',_sans-serif] transition-colors duration-700 relative overflow-hidden ${themeColors}`}>
@@ -79,13 +96,11 @@ export default function App() {
       {/* Persistent Backgrounds */}
       <div className="fixed inset-0 pointer-events-none">
         <div className={`absolute inset-0 transition-opacity duration-1000 ${activePage === 'home' ? 'opacity-100' : 'opacity-0'}`}>
-          {/* Night Mode: Moon */}
           <img 
             src="PXL_20240518_052455630.NIGHT%20(1).png" 
             alt="Moon" 
             className={`absolute -top-8 -right-8 md:-top-24 md:-right-24 w-72 md:w-[32rem] drop-shadow-[0_0_50px_rgba(255,255,255,0.15)] transition-all duration-1000 ${darkMode ? 'opacity-80 scale-100 rotate-0' : 'opacity-0 scale-75 rotate-45'}`}
           />
-          {/* Day Mode: Beach - Now spanning the full top of the page */}
           <img 
             src="56c28000-6c42-450f-85ee-0a28afe0e1cf~1.jpg" 
             alt="Beach" 
@@ -136,15 +151,33 @@ export default function App() {
 
             <div className="flex-1 flex flex-col sm:flex-row gap-4 md:gap-6 w-full">
               {[
-                { title: 'Fintech Dashboard', tag: 'Use Case 1', gradient: darkMode ? 'from-indigo-500/20' : 'from-blue-500/10' },
-                { title: 'E-Commerce App', tag: 'Use Case 2', gradient: darkMode ? 'from-emerald-500/20' : 'from-orange-500/10', stagger: true }
+                { 
+                  title: 'Fintech Dashboard', 
+                  tag: 'Use Case 1', 
+                  gradient: darkMode ? 'from-indigo-500/20' : 'from-blue-500/10' 
+                },
+                { 
+                  title: 'HP Remote Printing', 
+                  tag: 'Use Case 2', 
+                  isHP: true,
+                  link: 'HP UI Case Study.pdf',
+                  stagger: true 
+                }
               ].map((card, i) => (
-                <div key={i} className={`flex-1 group cursor-pointer ${card.stagger ? 'sm:mt-12' : ''}`}>
-                  <div className={`backdrop-blur-md rounded-3xl p-5 md:p-6 h-full min-h-[150px] md:min-h-[340px] flex flex-col justify-end transition-all duration-300 group-hover:-translate-y-2 border shadow-xl relative overflow-hidden ${darkMode ? 'bg-white/5 border-white/20 group-hover:border-white/40' : 'bg-white/80 border-orange-100 group-hover:border-orange-300'}`}>
-                    <div className={`absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${card.gradient} to-transparent`} />
+                <div key={i} onClick={() => handleCardClick(card.link)} className={`flex-1 group cursor-pointer ${card.stagger ? 'sm:mt-12' : ''}`}>
+                  <div className={`backdrop-blur-md rounded-3xl p-5 md:p-6 h-full min-h-[150px] md:min-h-[340px] flex flex-col justify-end transition-all duration-300 group-hover:-translate-y-2 border shadow-xl relative overflow-hidden ${card.isHP ? 'bg-[#0096D6] border-white/20' : (darkMode ? 'bg-white/5 border-white/20 group-hover:border-white/40' : 'bg-white/80 border-orange-100 group-hover:border-orange-300')}`}>
+                    
+                    {!card.isHP && <div className={`absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${card.gradient} to-transparent`} />}
+                    
+                    {card.isHP && (
+                      <div className="absolute -top-12 -right-12 md:-top-20 md:-right-20 opacity-20 group-hover:opacity-30 transition-opacity duration-500">
+                        <HPLogo className="w-48 h-48 md:w-80 md:h-80 text-white" />
+                      </div>
+                    )}
+
                     <div className="relative z-10">
-                      <span className={`font-['Space_Grotesk',_sans-serif] text-[10px] md:text-xs font-bold uppercase tracking-wider mb-1 md:mb-2 block ${darkMode ? 'text-indigo-300' : 'text-blue-600'}`}>{card.tag}</span>
-                      <h3 className="font-['Space_Grotesk',_sans-serif] text-lg md:text-xl font-bold leading-tight">{card.title}</h3>
+                      <span className={`font-['Space_Grotesk',_sans-serif] text-[10px] md:text-xs font-bold uppercase tracking-wider mb-1 md:mb-2 block ${card.isHP ? 'text-white/80' : (darkMode ? 'text-indigo-300' : 'text-blue-600')}`}>{card.tag}</span>
+                      <h3 className={`font-['Space_Grotesk',_sans-serif] text-lg md:text-xl font-bold leading-tight ${card.isHP ? 'text-white' : ''}`}>{card.title}</h3>
                     </div>
                   </div>
                 </div>
@@ -171,11 +204,14 @@ export default function App() {
               </header>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 text-base md:text-lg leading-relaxed opacity-80">
                 <div className="space-y-4 md:space-y-6">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-                  <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
+                  <p>
+                    I am a visual designer with a background in agency environments, where I’ve had the opportunity to bridge the gap between complex industries—ranging from semi conductor manufacturing to established federal credit unions. This diverse experience has shaped my ability to translate intricate business needs into clean, impactful visual stories.
+                  </p>
                 </div>
                 <div className="space-y-4 md:space-y-6">
-                  <p>Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis.</p>
+                  <p>
+                    Originally from San Diego and now calling the Pacific Northwest home, I draw a lot of my creative energy from the environments around me. When I’m not at my desk, you can usually find me looking up—I’m a lifelong space enthusiast with a deep curiosity for the cosmos.
+                  </p>
                   <div className="pt-4 md:pt-6 flex gap-4">
                     {[Github, Linkedin, Mail].map((Icon, i) => (
                       <button key={i} className={`p-2 md:p-3 rounded-xl border transition-all ${darkMode ? 'bg-white/10 border-white/20 hover:bg-white/20' : 'bg-white border-slate-200 hover:bg-slate-50 shadow-sm'}`}>
